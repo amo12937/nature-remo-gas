@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "format": "prettier --write src/",
     "lint": "eslint src/"
   },
   "devDependencies": {
