@@ -21,7 +21,10 @@ module.exports = {
         sourceType: "module",
         project: "./tsconfig.json",
       },
-      plugins: ["@typescript-eslint", "import"],
+      plugins: [
+        "@typescript-eslint",
+        "import",
+      ],
       rules: {
         "no-unused-vars": "off",
         "import/order": "error",
