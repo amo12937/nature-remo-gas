@@ -1,9 +1,17 @@
-export const greeter = (person: string): string => {
-  return `Hello, ${person}!`;
-};
+import retry from "async-retry";
+
+export const greeter = async (person: string): Promise<string> => await retry(
+  async (): string => {
+    return `Hello, ${person}!`;
+  },
+  {
+    retries: 5,
+  }
+);
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function testGreeter() {
+export async function testGreeter(): void {
   const user = "Grant";
-  Logger.log(greeter(user));
+  const greetingText = await greeter(user);
+  Logger.log(greetingText);
 }
