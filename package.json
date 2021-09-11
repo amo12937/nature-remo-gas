@@ -1,5 +1,7 @@
 {
   "scripts": {
+    "build": "webpack",
+    "push": "clasp push",
     "lint": "eslint src/ --max-warnings=0 && prettier --check src/",
     "lint:fix": "eslint src/ --fix && prettier --write src/",
     "test": "jest",
