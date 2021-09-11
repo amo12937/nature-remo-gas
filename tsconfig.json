@@ -5,11 +5,13 @@
     "experimentalDecorators": true,
     "lib": ["esnext"],
     "module": "esnext",
+    "moduleResolution": "node",
     "noUnusedLocals": true,
     "paths": {
       "@/*": ["src/*"]
     },
     "outDir": "./dist",
+    "resolveJsonModule": true,
     "rootDir": "./src",
     "strict": true
   },

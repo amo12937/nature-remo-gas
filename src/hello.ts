@@ -1,8 +1,7 @@
 import retry from "async-retry";
-import config from "@/config/config";
-import { Config } from "@/config/type";
+import config from "@/config/config.json";
 
-export const getConfig = (): Config => {
+export const getConfig = (): typeof config => {
   return config;
 };
 
