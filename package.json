@@ -1,9 +1,10 @@
 {
   "scripts": {
     "build": "webpack",
-    "push": "clasp push",
+    "deploy": "yarn lint && yarn test && yarn build && yarn push",
     "lint": "eslint src/ --max-warnings=0 && prettier --check src/",
     "lint:fix": "eslint src/ --fix && prettier --write src/",
+    "push": "clasp push",
     "test": "jest",
     "test:ci": "jest --ci",
     "test:watch": "jest --watch"
