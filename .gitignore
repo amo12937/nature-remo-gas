@@ -88,4 +88,4 @@ typings/
 .clasp.json
 dist/
 !dist/appsscript.json
-src/config/config.json
+src/config.json

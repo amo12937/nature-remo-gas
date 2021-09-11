@@ -1,5 +1,5 @@
 import retry from "async-retry";
-import config from "@/config/config.json";
+import config from "@/config.json";
 
 export const getConfig = (): typeof config => {
   return config;
