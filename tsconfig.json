@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "baseUrl": "./",
+    "esModuleInterop": true,
     "experimentalDecorators": true,
     "lib": ["esnext"],
     "module": "esnext",
