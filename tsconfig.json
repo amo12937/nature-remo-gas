@@ -3,9 +3,13 @@
     "baseUrl": "./",
     "experimentalDecorators": true,
     "lib": ["esnext"],
+    "module": "esnext",
+    "noUnusedLocals": true,
     "paths": {
       "@/*": ["src/*"]
     },
+    "outDir": "./dist",
+    "rootDir": "./src",
     "strict": true
   },
   "include": [
