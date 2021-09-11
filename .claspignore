@@ -1,0 +1,9 @@
+# see https://github.com/google/clasp#ignore-file-claspignore
+**/**
+!appsscript.json
+!**/*.gs
+!**/*.js
+!**/*.ts
+!**/*.html
+**/*.spec.ts
+.eslintrc.js
