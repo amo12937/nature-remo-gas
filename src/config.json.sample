@@ -1,3 +1,6 @@
 {
-  "a": "b"
+  "natureRemo": {
+    "accessToken": "{ACCESS_TOKEN}",
+    "baseUrl": "https://api.nature.global"
+  }
 }
