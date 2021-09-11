@@ -1,12 +1,12 @@
 {
   "compilerOptions": {
-    "lib": ["esnext"],
-    "experimentalDecorators": true,
-    "strict": true,
     "baseUrl": "./",
+    "experimentalDecorators": true,
+    "lib": ["esnext"],
     "paths": {
       "@/*": ["src/*"]
-    }
+    },
+    "strict": true
   },
   "include": [
     "src/**/*"
