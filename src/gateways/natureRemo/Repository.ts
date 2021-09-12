@@ -4,6 +4,7 @@ import {
   HTTPHeader,
   HTTPResponse,
 } from "google-apps-script";
+import { DateTime } from "luxon";
 import { Config } from "@/entities/natureRemo/Config";
 import { Device as DeviceEntity } from "@/entities/natureRemo/Device";
 import { Device, DeviceApiOutput } from "@/gateways/natureRemo/Device";
@@ -35,7 +36,7 @@ export class Repository {
     };
   }
 
-  getDevices(currentDatetime: Date): DeviceEntity[] {
+  getDevices(currentDatetime: DateTime): DeviceEntity[] {
     const url = `${this.config.baseUrl}/1/devices`;
     const params = {
       method: "get",

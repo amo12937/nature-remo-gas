@@ -1,15 +1,16 @@
+import { DateTime } from "luxon";
 import { Movement } from "@/entities/natureRemo/Movement";
 import { Device as DeviceEntity } from "@/entities/natureRemo/Device";
 
 export class Device implements DeviceEntity {
   readonly deviceId: string;
-  readonly datetime: Date;
+  readonly datetime: DateTime;
   readonly temperature: number;
   readonly humidity: number;
   readonly illumination: number;
   readonly movement: Movement;
 
-  constructor(currentDatetime: Date, deviceApiOutput: DeviceApiOutput) {
+  constructor(currentDatetime: DateTime, deviceApiOutput: DeviceApiOutput) {
     this.deviceId = deviceApiOutput.id;
     this.datetime = currentDatetime;
 
@@ -17,20 +18,16 @@ export class Device implements DeviceEntity {
     this.temperature = events.te.val;
     this.humidity = events.hu.val;
     this.illumination = events.il.val;
-    const lastMovedAt = new Date(Date.parse(events.mo.created_at));
+    const lastMovedAt = DateTime.fromISO(events.mo.created_at);
     this.movement = isMovedAtTheLastOneMinute(currentDatetime, lastMovedAt);
   }
 }
 
-export const MILLISECONDS_PER_MINUTE = 60 * 1000;
 export const isMovedAtTheLastOneMinute = (
-  currentDatetime: Date,
-  lastMovedAt: Date
+  currentDatetime: DateTime,
+  lastMovedAt: DateTime
 ): Movement => {
-  if (
-    lastMovedAt.getTime() <
-    currentDatetime.getTime() - MILLISECONDS_PER_MINUTE
-  ) {
+  if (lastMovedAt < currentDatetime.minus({ minutes: 1 })) {
     return Movement.Unmoved;
   }
   return Movement.Moved;
