@@ -1,20 +1,15 @@
-import {
-  UrlFetchApp,
-  URLFetchRequestOptions,
-  HTTPHeader,
-  HTTPResponse,
-} from "google-apps-script";
 import { DateTime } from "luxon";
 import { Config } from "@/entities/natureRemo/Config";
 import { Device as DeviceEntity } from "@/entities/natureRemo/Device";
 import { Device, DeviceApiOutput } from "@/gateways/natureRemo/Device";
+import {
+  Fetcher,
+  HttpHeaders,
+  URLFetchRequestOptions,
+} from "@/gateways/natureRemo/Fetcher";
 
 export interface RepositoryInterface {
-  getDevices(): Device[];
-}
-
-export interface Fetcher {
-  fetch(url: string, params: URLFetchRequestOptions): HTTPResponse;
+  getDevices(currentDatetime: DateTime): Device[];
 }
 
 export const newRepository = (config: Config): RepositoryInterface =>
@@ -29,7 +24,7 @@ export class Repository {
     this.fetcher = fetcher;
   }
 
-  createHeader(): HTTPHeader {
+  createHeader(): HttpHeaders {
     return {
       "Content-Type": "application/json;",
       Authorization: `Bearer ${this.config.accessToken}`,
@@ -38,7 +33,7 @@ export class Repository {
 
   getDevices(currentDatetime: DateTime): DeviceEntity[] {
     const url = `${this.config.baseUrl}/1/devices`;
-    const params = {
+    const params: URLFetchRequestOptions = {
       method: "get",
       headers: this.createHeader(),
     };
