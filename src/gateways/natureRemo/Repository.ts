@@ -5,7 +5,8 @@ import {
   HTTPResponse,
 } from "google-apps-script";
 import { Config } from "@/entities/natureRemo/Config";
-import { Device } from "@/entities/natureRemo/Device";
+import { Device as DeviceEntity } from "@/entities/natureRemo/Device";
+import { Device, DeviceApiOutput } from "@/gateways/natureRemo/Device";
 
 export interface RepositoryInterface {
   getDevices(): Device[];
@@ -34,14 +35,19 @@ export class Repository {
     };
   }
 
-  getDevices(): Device[] {
+  getDevices(currentDatetime: Date): DeviceEntity[] {
     const url = `${this.config.baseUrl}/1/devices`;
     const params = {
       method: "get",
       headers: this.createHeader(),
     };
-    const response = JSON.parse(this.fetcher.fetch(url, params));
-    console.log(response);
-    return [];
+    const response: DeviceApiOutput[] = JSON.parse(
+      this.fetcher.fetch(url, params).getContentText()
+    );
+
+    return response.map(
+      (deviceApiOutput: DeviceApiOutput) =>
+        new Device(currentDatetime, deviceApiOutput)
+    );
   }
 }
