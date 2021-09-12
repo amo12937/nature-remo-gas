@@ -1,7 +1,7 @@
-import { testGreeter } from "@/hello";
+import { run } from "@/main";
 
 declare const global: {
   [x: string]: unknown;
 };
 
-global.testGreeter = testGreeter;
+global.run = run;
