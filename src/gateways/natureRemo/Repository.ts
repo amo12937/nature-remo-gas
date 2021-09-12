@@ -3,10 +3,10 @@ import { Config } from "@/entities/natureRemo/Config";
 import { Device as DeviceEntity } from "@/entities/natureRemo/Device";
 import { Device, DeviceApiOutput } from "@/gateways/natureRemo/Device";
 import {
-  Fetcher,
+  UrlFetchAppInterface,
   HttpHeaders,
   URLFetchRequestOptions,
-} from "@/gateways/natureRemo/Fetcher";
+} from "@/gateways/googleAppsScript/urlFetchApp/UrlFetchAppInterface";
 
 export interface RepositoryInterface {
   getDevices(currentDatetime: DateTime): Device[];
@@ -17,11 +17,11 @@ export const newRepository = (config: Config): RepositoryInterface =>
 
 export class Repository {
   config: Config;
-  fetcher: Fetcher;
+  urlFetchApp: UrlFetchAppInterface;
 
-  constructor(config: Config, fetcher: Fetcher) {
+  constructor(config: Config, urlFetchApp: UrlFetchAppInterface) {
     this.config = config;
-    this.fetcher = fetcher;
+    this.urlFetchApp = urlFetchApp;
   }
 
   createHeader(): HttpHeaders {
@@ -38,7 +38,7 @@ export class Repository {
       headers: this.createHeader(),
     };
     const response: DeviceApiOutput[] = JSON.parse(
-      this.fetcher.fetch(url, params).getContentText()
+      this.urlFetchApp.fetch(url, params).getContentText()
     );
 
     return response.map(

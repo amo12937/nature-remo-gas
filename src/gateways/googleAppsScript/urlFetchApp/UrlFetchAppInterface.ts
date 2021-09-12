@@ -1,4 +1,4 @@
-export interface Fetcher {
+export interface UrlFetchAppInterface {
   fetch(url: string, params: URLFetchRequestOptions): HTTPResponse;
 }
 

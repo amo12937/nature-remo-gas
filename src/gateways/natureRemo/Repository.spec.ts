@@ -1,7 +1,7 @@
 import { DateTime } from "luxon";
 import { Config } from "@/entities/natureRemo/Config";
 import { Device } from "@/entities/natureRemo/Device";
-import { Fetcher } from "@/gateways/natureRemo/Fetcher";
+import { UrlFetchAppInterface } from "@/gateways/googleAppsScript/urlFetchApp/UrlFetchAppInterface";
 import { Repository } from "@/gateways/natureRemo/Repository";
 
 describe(Repository.name, () => {
@@ -11,12 +11,12 @@ describe(Repository.name, () => {
         accessToken: "dummy",
         baseUrl: "dummy",
       };
-      const fetcher: Fetcher = {
+      const urlFetchApp: UrlFetchAppInterface = {
         fetch: jest.fn().mockReturnValueOnce({
           getContentText: jest.fn().mockReturnValueOnce("[]"),
         }),
       };
-      const target = new Repository(config, fetcher);
+      const target = new Repository(config, urlFetchApp);
 
       const currentDatetime = DateTime.now();
       const actual = target.getDevices(currentDatetime);
@@ -30,12 +30,12 @@ describe(Repository.name, () => {
         accessToken: "dummy",
         baseUrl: "dummy",
       };
-      const fetcher: Fetcher = {
+      const urlFetchApp: UrlFetchAppInterface = {
         fetch: jest.fn().mockReturnValueOnce({
           getContentText: jest.fn().mockReturnValueOnce("hoge"),
         }),
       };
-      const target = new Repository(config, fetcher);
+      const target = new Repository(config, urlFetchApp);
 
       const currentDatetime = DateTime.now();
       expect((): void => {
@@ -48,7 +48,7 @@ describe(Repository.name, () => {
         accessToken: "dummy",
         baseUrl: "dummy",
       };
-      const fetcher: Fetcher = {
+      const urlFetchApp: UrlFetchAppInterface = {
         fetch: jest.fn().mockReturnValueOnce({
           getContentText: jest.fn().mockReturnValueOnce(
             JSON.stringify([
@@ -85,7 +85,7 @@ describe(Repository.name, () => {
           ),
         }),
       };
-      const target = new Repository(config, fetcher);
+      const target = new Repository(config, urlFetchApp);
 
       const currentDatetime = DateTime.now();
       const actual = target.getDevices(currentDatetime).length;
