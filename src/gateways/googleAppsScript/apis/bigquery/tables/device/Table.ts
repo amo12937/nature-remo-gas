@@ -5,7 +5,7 @@ import {
   TableSchema,
 } from "@/entities/googleAppsScript/apis/bigquery/schema/Table";
 import { Device } from "@/entities/natureRemo/Device";
-import { schema } from "@/gateways/googleAppsScript/bigquery/tables/device/Schema";
+import { schema } from "@/gateways/googleAppsScript/apis/bigquery/tables/device/Schema";
 
 export class Table implements TableInterface {
   readonly tableReference: TableReference;

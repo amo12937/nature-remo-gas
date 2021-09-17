@@ -3,7 +3,7 @@ import { Movement } from "@/entities/natureRemo/Movement";
 import {
   convertToIsMoved,
   convertDeviceToInsertId,
-} from "@/gateways/googleAppsScript/bigquery/tables/device/Record";
+} from "@/gateways/googleAppsScript/apis/bigquery/tables/device/Record";
 
 describe(convertDeviceToInsertId.name, () => {
   it("should create insertId by using deviceId and datetime", () => {

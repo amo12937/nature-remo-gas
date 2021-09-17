@@ -1,5 +1,5 @@
 import { DateTime } from "luxon";
-import { convertToTableId } from "@/gateways/googleAppsScript/bigquery/tables/device/Table";
+import { convertToTableId } from "@/gateways/googleAppsScript/apis/bigquery/tables/device/Table";
 import { Movement } from "@/entities/natureRemo/Movement";
 
 describe(convertToTableId.name, () => {
