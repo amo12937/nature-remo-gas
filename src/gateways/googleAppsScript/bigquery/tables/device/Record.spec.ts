@@ -1,6 +1,9 @@
 import { DateTime } from "luxon";
 import { Movement } from "@/entities/natureRemo/Movement";
-import { convertToIsMoved, convertDeviceToInsertId } from "@/gateways/googleAppsScript/bigquery/schemas/Device";
+import {
+  convertToIsMoved,
+  convertDeviceToInsertId,
+} from "@/gateways/googleAppsScript/bigquery/tables/device/Record";
 
 describe(convertDeviceToInsertId.name, () => {
   it("should create insertId by using deviceId and datetime", () => {
@@ -11,11 +14,11 @@ describe(convertDeviceToInsertId.name, () => {
       humidity: 0,
       illumination: 0,
       movement: Movement.Moved,
-    }
+    };
 
     const actual = convertDeviceToInsertId(device);
 
-    const expected = "3fa85f64-5717-4562-b3fc-2c963f66afa6 202109171011"
+    const expected = "3fa85f64-5717-4562-b3fc-2c963f66afa6 202109171011";
     expect(actual).toBe(expected);
   });
 
@@ -27,11 +30,11 @@ describe(convertDeviceToInsertId.name, () => {
       humidity: 0,
       illumination: 0,
       movement: Movement.Moved,
-    }
+    };
 
     const actual = convertDeviceToInsertId(device);
 
-    const expected = "3fa85f64-5717-4562-b3fc-2c963f66afa6 202109170111"
+    const expected = "3fa85f64-5717-4562-b3fc-2c963f66afa6 202109170111";
     expect(actual).toBe(expected);
   });
 });
