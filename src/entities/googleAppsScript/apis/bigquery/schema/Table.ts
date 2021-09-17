@@ -15,5 +15,5 @@ export interface TableReference {
 }
 
 export interface TableSchema {
-  fields: TableFieldSchema[];
+  readonly fields: TableFieldSchema[];
 }

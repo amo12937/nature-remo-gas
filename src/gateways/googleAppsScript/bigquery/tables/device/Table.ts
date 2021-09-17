@@ -1,5 +1,9 @@
 import { Config } from "@/entities/googleAppsScript/apis/bigquery/Config";
-import { Table as TableInterface } from "@/entities/googleAppsScript/apis/bigquery/schema/Table";
+import {
+  Table as TableInterface,
+  TableReference,
+  TableSchema,
+} from "@/entities/googleAppsScript/apis/bigquery/schema/Table";
 import { Device } from "@/entities/natureRemo/Device";
 import { schema } from "@/gateways/googleAppsScript/bigquery/tables/device/Schema";
 
