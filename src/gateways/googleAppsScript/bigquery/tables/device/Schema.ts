@@ -1,4 +1,4 @@
-export const deviceSchema = {
+export const schema = {
   fields: [
     {
       name: "insertId",
