@@ -6,7 +6,7 @@ import {
   UrlFetchAppInterface,
   HttpHeaders,
   URLFetchRequestOptions,
-} from "@/gateways/googleAppsScript/urlFetchApp/UrlFetchAppInterface";
+} from "@/entities/googleAppsScript/urlFetchApp/UrlFetchAppInterface";
 
 export interface RepositoryInterface {
   getDevices(currentDatetime: DateTime): Device[];

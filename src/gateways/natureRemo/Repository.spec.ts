@@ -1,7 +1,7 @@
 import { DateTime } from "luxon";
 import { Config } from "@/entities/natureRemo/Config";
 import { Device } from "@/entities/natureRemo/Device";
-import { UrlFetchAppInterface } from "@/gateways/googleAppsScript/urlFetchApp/UrlFetchAppInterface";
+import { UrlFetchAppInterface } from "@/entities/googleAppsScript/urlFetchApp/UrlFetchAppInterface";
 import { Repository } from "@/gateways/natureRemo/Repository";
 
 describe(Repository.name, () => {
