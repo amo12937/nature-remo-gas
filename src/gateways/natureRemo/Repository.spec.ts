@@ -1,7 +1,6 @@
 import { DateTime } from "luxon";
 import { Config } from "@/entities/natureRemo/Config";
 import { Device } from "@/entities/natureRemo/Device";
-import { UrlFetchAppInterface } from "@/entities/googleAppsScript/urlFetchApp/UrlFetchAppInterface";
 import { Repository } from "@/gateways/natureRemo/Repository";
 
 describe(Repository.name, () => {
@@ -11,10 +10,12 @@ describe(Repository.name, () => {
         accessToken: "dummy",
         baseUrl: "dummy",
       };
-      const urlFetchApp: UrlFetchAppInterface = {
+      const urlFetchApp: GoogleAppsScript.URL_Fetch.UrlFetchApp = {
         fetch: jest.fn().mockReturnValueOnce({
           getContentText: jest.fn().mockReturnValueOnce("[]"),
         }),
+        fetchAll: jest.fn(),
+        getRequest: jest.fn(),
       };
       const target = new Repository(config, urlFetchApp);
 
@@ -30,10 +31,12 @@ describe(Repository.name, () => {
         accessToken: "dummy",
         baseUrl: "dummy",
       };
-      const urlFetchApp: UrlFetchAppInterface = {
+      const urlFetchApp: GoogleAppsScript.URL_Fetch.UrlFetchApp = {
         fetch: jest.fn().mockReturnValueOnce({
           getContentText: jest.fn().mockReturnValueOnce("hoge"),
         }),
+        fetchAll: jest.fn(),
+        getRequest: jest.fn(),
       };
       const target = new Repository(config, urlFetchApp);
 
@@ -48,7 +51,7 @@ describe(Repository.name, () => {
         accessToken: "dummy",
         baseUrl: "dummy",
       };
-      const urlFetchApp: UrlFetchAppInterface = {
+      const urlFetchApp: GoogleAppsScript.URL_Fetch.UrlFetchApp = {
         fetch: jest.fn().mockReturnValueOnce({
           getContentText: jest.fn().mockReturnValueOnce(
             JSON.stringify([
@@ -84,6 +87,8 @@ describe(Repository.name, () => {
             ])
           ),
         }),
+        fetchAll: jest.fn(),
+        getRequest: jest.fn(),
       };
       const target = new Repository(config, urlFetchApp);
 
