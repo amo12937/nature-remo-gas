@@ -1,11 +1,12 @@
-import { Job } from "@/entities/googleAppsScript/apis/bigquery/schema/Job";
-import { Table } from "@/entities/googleAppsScript/apis/bigquery/schema/Table";
-
 export interface JobProviderInterface {
-  createJob(table: Table): Job;
+  createJob(
+    table: GoogleAppsScript.BigQuery.Schema.Table
+  ): GoogleAppsScript.BigQuery.Schema.Job;
 }
 
-export const createJob = (table: Table): Job => ({
+export const createJob = (
+  table: GoogleAppsScript.BigQuery.Schema.Table
+): GoogleAppsScript.BigQuery.Schema.Job => ({
   configuration: {
     load: {
       destinationTable: table.tableReference,

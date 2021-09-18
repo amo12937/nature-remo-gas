@@ -1,5 +1,4 @@
 import { Device } from "@/entities/natureRemo/Device";
-import { BigQueryInterface } from "@/entities/googleAppsScript/apis/bigquery/BigQuery";
 import {
   createJob,
   JobProviderInterface,
@@ -18,12 +17,12 @@ export const newRepository = (config: Config): RepositoryInterface =>
   new Repository(Bigquery, new TableProvider(config), { createJob });
 
 export class Repository implements RepositoryInterface {
-  readonly bigquery: BigQueryInterface;
+  readonly bigquery: GoogleAppsScript.Bigquery;
   readonly tableProvider: TableProviderInterface;
   readonly jobProvider: JobProviderInterface;
 
   constructor(
-    bigquery: BigQueryInterface,
+    bigquery: GoogleAppsScript.Bigquery,
     tableProvider: TableProviderInterface,
     jobProvider: JobProviderInterface
   ) {
