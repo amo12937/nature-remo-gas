@@ -4,4 +4,4 @@ import { TablesCollection } from "@/entities/googleAppsScript/apis/bigquery/coll
 export interface BigQueryInterface {
   Jobs: JobsCollection;
   Tables: TablesCollection;
-};
+}

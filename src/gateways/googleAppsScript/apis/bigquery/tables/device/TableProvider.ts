@@ -3,7 +3,11 @@ import { Table } from "@/entities/googleAppsScript/apis/bigquery/schema/Table";
 import { Device } from "@/entities/natureRemo/Device";
 import { schema } from "@/gateways/googleAppsScript/apis/bigquery/tables/device/Schema";
 
-export class TableProvider {
+export interface TableProviderInterface {
+  createTable(device: Device): Table;
+}
+
+export class TableProvider implements TableProviderInterface {
   readonly config: Config;
 
   constructor(config: Config) {

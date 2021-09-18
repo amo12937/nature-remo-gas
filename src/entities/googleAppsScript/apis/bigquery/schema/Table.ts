@@ -1,4 +1,5 @@
 export interface Table {
+  readonly id?: string | undefined;
   readonly tableReference: TableReference;
   readonly schema: TableSchema;
 }
