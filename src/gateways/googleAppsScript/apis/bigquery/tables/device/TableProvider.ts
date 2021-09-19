@@ -16,8 +16,8 @@ export class TableProvider implements TableProviderInterface {
   createTable(device: Device): GoogleAppsScript.BigQuery.Schema.Table {
     return {
       tableReference: {
-        datasetId: this.config.datasetId,
-        projectId: this.config.projectId,
+        datasetId: this.config.googleAppsScript.apis.bigquery.datasetId,
+        projectId: this.config.googleAppsScript.apis.bigquery.projectId,
         tableId: this.convertToTableId(device),
       },
       schema,
@@ -26,7 +26,7 @@ export class TableProvider implements TableProviderInterface {
 
   convertToTableId(device: Device): string {
     const suffix = device.datetime
-      .setZone(this.config.timezone)
+      .setZone(this.config.core.timezone)
       .toFormat("yyyyMMdd");
     return `device_${device.deviceId}_${suffix}`;
   }

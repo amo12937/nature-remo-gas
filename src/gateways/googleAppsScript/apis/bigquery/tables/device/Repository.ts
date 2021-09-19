@@ -1,4 +1,6 @@
+import retry from "async-retry";
 import { Device } from "@/entities/natureRemo/Device";
+import { Config } from "@/entities/googleAppsScript/apis/bigquery/Config";
 import {
   createJob,
   JobProviderInterface,
@@ -13,35 +15,75 @@ export interface RepositoryInterface {
   insert(device: Device): Promise<void>;
 }
 
+export interface BigQueryInterface {
+  Jobs?: GoogleAppsScript.BigQuery.Collection.JobsCollection | undefined;
+  Tables?: GoogleAppsScript.BigQuery.Collection.TablesCollection | undefined;
+}
+
 export const newRepository = (config: Config): RepositoryInterface =>
-  new Repository(Bigquery, new TableProvider(config), { createJob });
+  new Repository(config, Bigquery, new TableProvider(config), { createJob });
 
 export class Repository implements RepositoryInterface {
-  readonly bigquery: GoogleAppsScript.Bigquery;
+  readonly config: Config;
+  readonly bigquery: BigQueryInterface;
   readonly tableProvider: TableProviderInterface;
   readonly jobProvider: JobProviderInterface;
 
   constructor(
-    bigquery: GoogleAppsScript.Bigquery,
+    config: Config,
+    bigquery: BigQueryInterface,
     tableProvider: TableProviderInterface,
     jobProvider: JobProviderInterface
   ) {
+    this.config = config;
     this.bigquery = bigquery;
     this.tableProvider = tableProvider;
     this.jobProvider = jobProvider;
   }
 
   insert(device: Device): Promise<void> {
-    const table = this.tableProvider.createTable(device);
-    const createdTable = this.bigquery.Tables.insert(
-      table,
-      table.tableReference.projectId,
-      table.tableReference.datasetId
+    return retry(
+      async (bail: (e: Error) => void) => {
+        if (this.bigquery.Tables === undefined) {
+          bail(new TypeError("Tables must be defined"));
+          return;
+        }
+
+        if (this.bigquery.Jobs === undefined) {
+          bail(new TypeError("Jobs must be defined"));
+          return;
+        }
+
+        const table = this.tableProvider.createTable(device);
+        if (table.tableReference === undefined) {
+          bail(new TypeError("tableReference must be defined"));
+          return;
+        }
+
+        if (table.tableReference.projectId === undefined) {
+          bail(new TypeError("projectId must be defined"));
+          return;
+        }
+
+        if (table.tableReference.datasetId === undefined) {
+          bail(new TypeError("projectId must be defined"));
+          return;
+        }
+
+        const createdTable = this.bigquery.Tables.insert(
+          table,
+          table.tableReference.projectId,
+          table.tableReference.datasetId
+        );
+
+        const record = convertToDeviceRecord(device);
+
+        const job = this.jobProvider.createJob(createdTable);
+        this.bigquery.Jobs.insert(job, table.tableReference.projectId, record);
+      },
+      {
+        retries: this.config.googleAppsScript.apis.bigquery.retry?.retries ?? 5,
+      }
     );
-
-    const record = convertToDeviceRecord(device);
-
-    const job = this.jobProvider.createJob(createdTable);
-    this.bigquery.Jobs.insert(job, table.tableReference.projectId, record);
   }
 }

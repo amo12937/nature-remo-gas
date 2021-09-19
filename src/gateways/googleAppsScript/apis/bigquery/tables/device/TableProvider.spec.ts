@@ -6,9 +6,17 @@ describe(TableProvider.name, () => {
   describe("convertToTableId", () => {
     it("should return tableId", () => {
       const config = {
-        projectId: "project_id",
-        datasetId: "dataset_id",
-        timezone: "Asia/Tokyo",
+        core: {
+          timezone: "Asia/Tokyo",
+        },
+        googleAppsScript: {
+          apis: {
+            bigquery: {
+              projectId: "project_id",
+              datasetId: "dataset_id",
+            },
+          },
+        },
       };
       const target = new TableProvider(config);
       const device = {

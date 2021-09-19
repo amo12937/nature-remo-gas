@@ -1,5 +1,18 @@
-export type Config = {
-  projectId: string;
-  datasetId: string;
-  timezone: string;
-};
+export interface Config {
+  core: {
+    timezone: string;
+  };
+  googleAppsScript: {
+    apis: {
+      bigquery: {
+        projectId: string;
+        datasetId: string;
+        retry?:
+          | {
+              retries?: number | undefined;
+            }
+          | undefined;
+      };
+    };
+  };
+}
