@@ -4,7 +4,7 @@ import { Device as DeviceEntity } from "@/entities/natureRemo/Device";
 import { Device, DeviceApiOutput } from "@/gateways/natureRemo/Device";
 
 export interface RepositoryInterface {
-  getDevices(currentDatetime: DateTime): Device[];
+  getDevices(currentDatetime: DateTime): DeviceEntity[];
 }
 
 export const newRepository = (config: Config): RepositoryInterface =>
