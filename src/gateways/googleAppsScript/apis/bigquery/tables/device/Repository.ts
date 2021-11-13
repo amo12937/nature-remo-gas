@@ -12,6 +12,7 @@ import {
 } from "@/gateways/googleAppsScript/apis/bigquery/tables/device/TableProvider";
 
 export interface RepositoryInterface {
+  insertAll(devices: Device[]): Promise<void>;
   insert(device: Device): Promise<void>;
 }
 
@@ -39,6 +40,12 @@ export class Repository implements RepositoryInterface {
     this.bigquery = bigquery;
     this.tableProvider = tableProvider;
     this.jobProvider = jobProvider;
+  }
+
+  async insertAll(devices: Device[]): Promise<void> {
+    for (const device of devices) {
+      await this.insert(device);
+    }
   }
 
   insert(device: Device): Promise<void> {
