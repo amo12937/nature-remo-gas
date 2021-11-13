@@ -1,4 +1,5 @@
 import retry from "async-retry";
+import { LoggerInterface, provideLogger } from "@/entities/LoggerProvider";
 import { Device } from "@/entities/natureRemo/Device";
 import { Config } from "@/entities/googleAppsScript/apis/bigquery/Config";
 import {
@@ -29,6 +30,7 @@ export class Repository implements RepositoryInterface {
   readonly bigquery: BigQueryInterface;
   readonly tableProvider: TableProviderInterface;
   readonly jobProvider: JobProviderInterface;
+  readonly logger: LoggerInterface;
 
   constructor(
     config: Config,
@@ -40,6 +42,7 @@ export class Repository implements RepositoryInterface {
     this.bigquery = bigquery;
     this.tableProvider = tableProvider;
     this.jobProvider = jobProvider;
+    this.logger = provideLogger();
   }
 
   async insertAll(devices: Device[]): Promise<void> {
@@ -90,6 +93,9 @@ export class Repository implements RepositoryInterface {
       },
       {
         retries: this.config.googleAppsScript.apis.bigquery.retry?.retries ?? 5,
+        onRetry: (e: Error): void => {
+          this.logger.log(e);
+        },
       }
     );
   }
