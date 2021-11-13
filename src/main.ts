@@ -1,10 +1,12 @@
 import { DateTime } from "luxon";
 import config from "@/config.json";
-import { newRepository } from "@/gateways/natureRemo/Repository";
+import { newDeviceRecorder } from "@/usecases/DeviceRecorder";
 
-export const run = (): void => {
+export const run = async (): Promise<void> => {
+  Logger.log("start");
   const currentDatetime = DateTime.now();
-  const natureRemoRepository = newRepository(config.natureRemo);
-  const devices = natureRemoRepository.getDevices(currentDatetime);
-  Logger.log(devices);
+  Logger.log(currentDatetime);
+  const deviceRecorder = newDeviceRecorder(config);
+  await deviceRecorder.recordDevice(currentDatetime);
+  Logger.log("finished");
 };
