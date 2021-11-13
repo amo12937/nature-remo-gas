@@ -1,4 +1,3 @@
-export type Config = {
-  accessToken: string;
-  baseUrl: string;
-};
+import { Config as BaseConfig } from "@/entities/Config";
+
+export type Config = BaseConfig["natureRemo"];

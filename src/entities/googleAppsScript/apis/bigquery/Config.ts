@@ -1,18 +1,6 @@
+import { Config as BaseConfig } from "@/entities/Config";
+
 export interface Config {
-  core: {
-    timezone: string;
-  };
-  googleAppsScript: {
-    apis: {
-      bigquery: {
-        projectId: string;
-        datasetId: string;
-        retry?:
-          | {
-              retries?: number | undefined;
-            }
-          | undefined;
-      };
-    };
-  };
+  core: BaseConfig["core"];
+  googleAppsScript: BaseConfig["googleAppsScript"];
 }
