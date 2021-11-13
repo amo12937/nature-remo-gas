@@ -11,6 +11,8 @@
   },
   "devDependencies": {
     "@babel/core": "^7.15.5",
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.16.0",
+    "@babel/plugin-proposal-optional-chaining": "^7.16.0",
     "@babel/preset-typescript": "^7.15.0",
     "@google/clasp": "^2.4.1",
     "@types/async-retry": "^1.4.3",

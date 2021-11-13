@@ -22,7 +22,15 @@ module.exports = {
       {
         test: /\.[tj]s$/,
         exclude: /node_modules/,
-        loader: "babel-loader",
+        use: {
+          loader: "babel-loader",
+          options: {
+            plugins: [
+              "@babel/plugin-proposal-nullish-coalescing-operator",
+              "@babel/plugin-proposal-optional-chaining",
+            ]
+          }
+        }
       },
       {
         enforce: "pre",
