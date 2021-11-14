@@ -1,4 +1,5 @@
 import { Config } from "@/entities/googleAppsScript/apis/bigquery/Config";
+import { isNotFound } from "@/entities/googleAppsScript/errors/NotFound";
 import { Device } from "@/entities/natureRemo/Device";
 import { retry } from "@/entities/retry/AsyncRetry";
 import {
@@ -73,15 +74,34 @@ export class Repository implements RepositoryInterface {
         }
 
         if (table.tableReference.datasetId === undefined) {
-          bail(new TypeError("projectId must be defined"));
+          bail(new TypeError("datasetId must be defined"));
           return;
         }
 
-        const createdTable = this.bigquery.Tables.insert(
-          table,
-          table.tableReference.projectId,
-          table.tableReference.datasetId
-        );
+        if (table.tableReference.tableId === undefined) {
+          bail(new TypeError("tableId must be defined"));
+          return;
+        }
+
+        let createdTable: GoogleAppsScript.BigQuery.Schema.Table | null = null;
+
+        try {
+          createdTable = this.bigquery.Tables.get(
+            table.tableReference.projectId,
+            table.tableReference.datasetId,
+            table.tableReference.tableId
+          );
+        } catch (e) {
+          if (!isNotFound(e)) {
+            throw e;
+          }
+
+          createdTable = this.bigquery.Tables.insert(
+            table,
+            table.tableReference.projectId,
+            table.tableReference.datasetId
+          );
+        }
 
         const record = convertToDeviceRecord(device);
 
