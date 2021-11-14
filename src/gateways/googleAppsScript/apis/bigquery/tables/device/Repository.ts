@@ -62,7 +62,7 @@ export class Repository implements RepositoryInterface {
           return;
         }
 
-        const table = this.tableProvider.createTable(device);
+        const table = this.tableProvider.createTable();
         if (table.tableReference === undefined) {
           bail(new TypeError("tableReference must be defined"));
           return;
