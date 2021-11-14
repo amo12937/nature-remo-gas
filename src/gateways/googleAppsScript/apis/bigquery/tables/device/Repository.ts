@@ -1,7 +1,6 @@
-import retry from "async-retry";
-import { provider as loggerProvider } from "@/entities/googleAppsScript/adapters/logger/Provider";
-import { Device } from "@/entities/natureRemo/Device";
 import { Config } from "@/entities/googleAppsScript/apis/bigquery/Config";
+import { Device } from "@/entities/natureRemo/Device";
+import { retry } from "@/entities/retry/AsyncRetry";
 import {
   createJob,
   JobProviderInterface,
@@ -91,10 +90,6 @@ export class Repository implements RepositoryInterface {
       },
       {
         retries: this.config.googleAppsScript.apis.bigquery.retry?.retries ?? 5,
-        onRetry: (e: Error): void => {
-          const logger = loggerProvider.provide();
-          logger.log(e);
-        },
       }
     );
   }
