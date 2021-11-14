@@ -1,3 +1,4 @@
+import { provider as blobGeneratorProvider } from "@/entities/googleAppsScript/adapters/blobGenerator/Provider";
 import { Config } from "@/entities/googleAppsScript/apis/bigquery/Config";
 import { isNotFound } from "@/entities/googleAppsScript/errors/NotFound";
 import { Device } from "@/entities/natureRemo/Device";
@@ -104,9 +105,11 @@ export class Repository implements RepositoryInterface {
         }
 
         const record = convertToDeviceRecord(device);
+        const blobGenerator = blobGeneratorProvider.provide();
+        const blob = blobGenerator.generateBlob([record]);
 
         const job = this.jobProvider.createJob(createdTable);
-        this.bigquery.Jobs.insert(job, table.tableReference.projectId, record);
+        this.bigquery.Jobs.insert(job, table.tableReference.projectId, blob);
       },
       {
         retries: this.config.googleAppsScript.apis.bigquery.retry?.retries ?? 5,
