@@ -1,7 +1,7 @@
 import {
   Provider,
-  setIsGoogleAppsScriptEnvironment
-} from "@/entities/googleAppsScript/adapters/Provider"
+  setIsGoogleAppsScriptEnvironment,
+} from "@/entities/googleAppsScript/adapters/Provider";
 
 describe(Provider.name, () => {
   describe("provide", () => {
@@ -31,4 +31,3 @@ describe(Provider.name, () => {
     });
   });
 });
-
